@@ -2,6 +2,8 @@
   (:require [clojure.test :refer :all]
             [molecular-cloning.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+
+(deftest codon-test
+  (testing "Test codon hash-map"
+    (is (= (molecular-cloning.core/codons "GGG") "Gly"))
+    (is (= (molecular-cloning.core/codons "TAA") "TER"))))
