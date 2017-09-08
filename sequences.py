@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import settings
+import functools
 
 class BaseSequence(ABC):
     def __init__(self, seq):
@@ -49,8 +50,13 @@ class DNASequence(BaseSequence):
             unallowed = set(self.seq) - allowed
             raise ValueError('Seq contains unallowed chars: {unallowed}'
                              .format(unallowed=unallowed))
-        
 
+    def translate(self):
+        codons = map(''.join, zip(*[iter(self.seq)]*3))
+        amino_acids = map(settings.CODONS.get, codons)
+        amino_acids_abbreviations = map(settings.ACIDS.get, amino_acids)
+        print(list(amino_acids_abbreviations))
+        return ProteinSequence(amino_acids_abbreviations)
 
 class ProteinSequence(BaseSequence):
     def _verify_seq(self):
