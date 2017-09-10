@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import settings
-import functools
+
 
 class BaseSequence(ABC):
     def __init__(self, seq):
@@ -36,7 +36,7 @@ class BaseSequence(ABC):
 
     def __contains__(self, item):
         return item in self.seq
-        
+
     @abstractmethod
     def _verify_seq(self):
         pass
@@ -58,10 +58,28 @@ class DNASequence(BaseSequence):
         print(list(amino_acids_abbreviations))
         return ProteinSequence(amino_acids_abbreviations)
 
+
 class ProteinSequence(BaseSequence):
+
     def _verify_seq(self):
         allowed = set(settings.ACIDS.values())
         if not set(self.seq) <= allowed:
             unallowed = set(self.seq) - allowed
             raise ValueError('Seq contains unallowed chars: {unallowed}'
                              .format(unallowed=unallowed))
+
+    def is_protein(self, start=False):
+        """
+        Determines if sequence is a protein (ORF)
+
+        Args:
+            start (bool): If true, sequence must start with MET
+
+        Returns:
+            bool: True if sequence is an ORG
+            """
+        if '-' not in self.seq[:-1]:
+            if start:
+                return self.seq[0] == 'M'
+            return True
+        return False
