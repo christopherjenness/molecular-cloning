@@ -42,3 +42,12 @@ def convert_to_regex(restriction_site, NEB_dict):
     cutsite = regex.index('/')
     regex = regex.replace('/', '')
     return regex, enzyme, cutsite
+
+
+def generate_regex_dict():
+    sites = import_NEB()
+    regex_dict = {}
+    for site in sites:
+        regex, enzyme, cutsite = convert_to_regex(site, sites)
+        regex_dict[regex] = (enzyme, cutsite)
+    return regex_dict
