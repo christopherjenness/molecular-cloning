@@ -1,3 +1,4 @@
+import re
 from abc import ABC, abstractmethod
 import settings
 
@@ -58,6 +59,16 @@ class DNASequence(BaseSequence):
         print(list(amino_acids_abbreviations))
         return ProteinSequence(amino_acids_abbreviations)
 
+    def detect_cutsite(self, regex):
+        match_sites = []
+        matches = re.finditer(regex, ''.join(self.seq))
+        for match in matches:
+            match_sites.append(match.span())
+        return match_sites
+
+    def detect_cutsites(self):
+        pass
+
 
 class ProteinSequence(BaseSequence):
 
@@ -83,3 +94,19 @@ class ProteinSequence(BaseSequence):
                 return self.seq[0] == 'M'
             return True
         return False
+
+    def get_mass(self):
+        """
+        Calculates molecular weight of sequence
+        """
+        mass = [settings.WEIGHTS[x] for x in self.seq]
+        total_mass = sum(mass)
+        return total_mass
+
+    def get_absorbance(self):
+        """
+        Calaculates A280 absorbance
+        """
+        absorbance = [settings.ABSORBANCES.get(x, 0) for x in self.seq]
+        total_absorbance = sum(absorbance)
+        return total_absorbance
