@@ -1,5 +1,6 @@
 import re
 from abc import ABC, abstractmethod
+from collections import defaultdict
 import settings
 
 
@@ -67,7 +68,11 @@ class DNASequence(BaseSequence):
         return match_sites
 
     def detect_cutsites(self):
-        pass
+        all_cutsites = defaultdict(list)
+        for regex in settings.CUTSITES.keys():
+            for match in self.detect_cutsite(regex):
+                all_cutsites[match].append(settings.CUTSITES[regex])
+        return all_cutsites
 
 
 class ProteinSequence(BaseSequence):
