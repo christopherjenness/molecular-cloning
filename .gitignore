@@ -9,3 +9,10 @@ pom.xml.asc
 /.nrepl-port
 .hgignore
 .hg/
+
+.DS_Store
+*.pyc
+build/*
+dist/*
+*.egg-info/
+*.cache
