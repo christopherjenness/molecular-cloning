@@ -1,6 +1,8 @@
+import os
 import re
 from abc import ABC, abstractmethod
 from collections import defaultdict
+import pickle
 import settings
 
 
@@ -42,6 +44,11 @@ class BaseSequence(ABC):
     @abstractmethod
     def _verify_seq(self):
         pass
+
+    def save_seq(self, fname):
+        if os.path.splitext(fname)[1] != '.d':
+            fname += '.d'
+        pickle.dump(self, open(fname, "wb"))
 
 
 class DNASequence(BaseSequence):
@@ -115,3 +122,8 @@ class ProteinSequence(BaseSequence):
         absorbance = [settings.ABSORBANCES.get(x, 0) for x in self.seq]
         total_absorbance = sum(absorbance)
         return total_absorbance
+
+
+def load_seq(fname):
+    seq = pickle.load(open(fname, "rb"))
+    return seq
