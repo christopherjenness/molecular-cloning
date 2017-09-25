@@ -2,5 +2,14 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
-Home.
+
+<form action="." method="POST">
+  <TEXTAREA NAME="Address" ROWS=10 COLS=60 name="sequence">
+  </TEXTAREA>
+  <br>
+  <input type="submit" name="DNA" value="Add DNA Sequence">
+  <br>
+  <input type="submit" name="protein" value="Add Protein Sequence">
+</form>
+
 {% endblock %}
