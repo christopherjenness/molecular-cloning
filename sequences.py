@@ -9,6 +9,7 @@ import settings
 class BaseSequence(ABC):
     def __init__(self, seq):
         self.seq = list(seq)
+        self._clean_seq()
         self._verify_seq()
 
     def __repr__(self):
@@ -42,6 +43,10 @@ class BaseSequence(ABC):
         return item in self.seq
 
     @abstractmethod
+    def _clean_seq(self):
+        pass
+
+    @abstractmethod
     def _verify_seq(self):
         pass
 
@@ -52,6 +57,10 @@ class BaseSequence(ABC):
 
 
 class DNASequence(BaseSequence):
+
+    def _clean_seq(self):
+        self.seq = [char for char in self.seq if not char.isdigit()
+                    and char != ' ']
 
     def _verify_seq(self):
         allowed = set('ATCG')
@@ -83,6 +92,10 @@ class DNASequence(BaseSequence):
 
 
 class ProteinSequence(BaseSequence):
+
+    def _clean_seq(self):
+        self.seq = [char for char in self.seq if not char.isdigit()
+                    and char != ' ']
 
     def _verify_seq(self):
         allowed = set(settings.ACIDS.values())
