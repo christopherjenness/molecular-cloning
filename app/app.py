@@ -20,7 +20,7 @@ def DNA_home():
 def dna_sequence_input():
     seq = request.form['sequence']
     dna = sequences.DNASequence(seq)
-    return
+    return render_template('DNA.html', seq=dna)
 
 
 @app.route('/protein/', methods=['GET'])
