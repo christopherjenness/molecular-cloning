@@ -32,7 +32,7 @@ def protein_home():
 def protein_sequence_input():
     seq = request.form['sequence']
     protein = sequences.ProteinSequence(seq)
-    return
+    return render_template('protein.html', seq=protein)
 
 
 if __name__ == '__main__':
