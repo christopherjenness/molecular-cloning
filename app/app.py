@@ -25,7 +25,7 @@ def dna_sequence_input():
 
 @app.route('/protein/', methods=['GET'])
 def protein_home():
-    return render_template('home.html')
+    return render_template('insert_protein.html')
 
 
 @app.route('/protein/', methods=['POST'])
