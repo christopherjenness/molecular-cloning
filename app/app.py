@@ -13,7 +13,7 @@ def home():
 
 @app.route('/DNA/', methods=['GET'])
 def DNA_home():
-    return render_template('home.html')
+    return render_template('insert_dna.html')
 
 
 @app.route('/DNA/', methods=['POST'])
